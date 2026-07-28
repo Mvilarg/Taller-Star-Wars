@@ -1,0 +1,94 @@
+* {
+    padding: 0px ;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "Star-wars";
+    src: url(../assets/font/Orbitron-VariableFont_wght.ttf);
+    font-weight: normal ;
+    font-style: normal;
+}
+
+/* Fondo */
+body {
+    background-image: url(../assets/img/Fondo-estrellas.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    font-family: "star-wars";
+}
+
+/* Imagen de fondo */
+#Fondo{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    margin-top: 80px;
+}
+
+#Fondo img{
+    width: 60vw;
+    animation: aparecerLogo 3s ease-in-out forwards;
+    opacity: 0; 
+    transform: scale(0.5);
+}   
+/*variable para efecto de logo */
+@keyframes aparecerLogo {
+  100% {
+    opacity: 1;
+    transform: scale(1); 
+  }
+}
+
+/*Menu hamburguesa*/
+.menu {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+.hamburguesa{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.hamburguesa span{
+    display: block;
+    width: 30px;    
+    height: 3px;
+    background-color: #f8e111;
+    transition: 0.3s;
+}
+
+#menu-navegacion{
+    position: absolute;
+    top: 40px;  
+    left: 0;    
+    background-color:transparent;
+    padding: 1rem;
+    color: #f8e111;
+}
+
+#menu-navegacion ul {
+    cursor: pointer;
+}
+
+#menu-navegacion li{
+    list-style-type: none;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+#menu-navegacion oculto{
+    display: none;
+}
+
+

@@ -57,13 +57,13 @@ body {
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
 }
 
 .hamburguesa span{
     display: block;
-    width: 30px;    
-    height: 3px;
+    width: 40px;    
+    height: 5px;
     background-color: #f8e111;
     transition: 0.3s;
 }
@@ -83,11 +83,15 @@ body {
 
 #menu-navegacion li{
     list-style-type: none;
-    font-size: 18px;
-    margin-bottom: 5px;
+    font-size: 23px;
+    margin-bottom: 10px;
 }
 
-#menu-navegacion oculto{
+#menu-navegacion li:hover {
+    transform: translateX(10px);
+}
+
+.oculto{
     display: none;
 }
 

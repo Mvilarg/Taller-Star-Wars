@@ -115,7 +115,7 @@ filtroGenero.addEventListener("change", aplicarFiltros);
 selectOrden.addEventListener("change", aplicarFiltros);
 
 // ==========================================
-// 4. RENDERIZADO DE TARJETAS (SIN IMÁGENES)
+// 4. RENDERIZADO DE TARJETAS
 // ==========================================
 function renderizarPersonajes(lista) {
     contenedorTarjetas.innerHTML = "";

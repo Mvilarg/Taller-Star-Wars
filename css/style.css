@@ -10,6 +10,9 @@
     font-weight: normal ;
     font-style: normal;
 }
+main {
+    padding-bottom: 70px;
+}
 
 /* Fondo */
 body {
@@ -103,12 +106,13 @@ body {
     display: none;
 }
 
+/* Mensajes de construccion */
 .mensaje-construccion {
     text-align: center;
     padding: 60px 20px;
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
-    border: 1px dashed #ffe81f; /* Borde punteado amarillo Star Wars */
+    border: 1px dashed #ffe81f; 
     margin: 30px auto;
     max-width: 500px;
 }
@@ -123,4 +127,18 @@ body {
 .mensaje-construccion small {
     color: #ccc;
     font-size: 1rem;
+}
+/*footer*/
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: #f8e111;
+    background-color: rgba(255, 255, 255, 0.08); 
+    text-align: center;
+    padding: 12px 0;
+    font-size: 0.9rem;
+    border-top: 1px solid #ffe81f;
+    z-index: 90;
 }

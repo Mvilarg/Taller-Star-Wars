@@ -44,14 +44,14 @@
             <option value="n/a">Anroide</option>
         </select>
 
-        <!-- Ordenamiento -->
+        
         <select id="select-orden">
             <option value="a-z">Nombre: A - Z</option>
             <option value="z-a">Nombre: Z - A</option>
         </select>
     </div>
 
-    <!-- INDICADOR DE CARGA (Loader/Spinner) -->
+    <!-- INDICADOR DE CARGA -->
     <div id="loader" class="loader oculto">
 
     </div>
@@ -66,7 +66,7 @@
             <p><strong>Género:</strong> male</p>
             <p><strong>Altura:</strong> 172 cm</p>
             <p><strong>Peso:</strong> 77 kg</p>
-            <p><strong>Nacimiento:</strong> 19BBY</p>
+            <p><strong>Nacimiento:</strong>  19BBY</p>
             <button class="btn-detalle">Ver detalles</button>
         </article>
     </div>
@@ -90,11 +90,18 @@
     </div>
 </section>
 
-    <section id="footer">
-        <footer>
+<aside id="panel-detalle" class="panel-lateral cerrado">
+    <button id="btn-cerrar-panel" class="btn-cerrar">&times;</button>
+    <div class="panel-contenido">
+        <h2 id="detalle-nombre">Nombre del Personaje</h2>
+        <div id="detalle-info"></div>
+    </div>
+</aside>
 
-        </footer>
-    </section>
+<footer>
+    <p>Campus Wars - Que el codigo te acompañe</p> 
+</footer>
+    
 </main>
 <script src="./js/api.js"></script>
 <script src="./js/ui.js"></script>

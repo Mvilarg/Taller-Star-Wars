@@ -67,10 +67,10 @@ async function cargarVistaPersonajes() {
         if (loader) loader.classList.remove("oculto");
         contenedorTarjetas.innerHTML = "";
 
-        // Petición a la API mediante la función de api.js
+        // Petición a la API 
         personajesGuardados = await obtenerPersonajes();
 
-        // Reseteamos los filtros a sus valores iniciales
+        // Resetea los filtros a sus valores iniciales
         if (inputBusqueda) inputBusqueda.value = "";
         if (filtroGenero) filtroGenero.value = "todos";
         if (selectOrden) selectOrden.value = "a-z";
@@ -109,7 +109,7 @@ function aplicarFiltros() {
     renderizarPersonajes(lista);
 }
 
-// Escuchamos los cambios en tiempo real
+// cambios en tiempo real
 inputBusqueda.addEventListener("input", aplicarFiltros);
 filtroGenero.addEventListener("change", aplicarFiltros);
 selectOrden.addEventListener("change", aplicarFiltros);

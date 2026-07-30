@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Star-Wars</title>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/cards.css">
 </head>
 <body id = "cuerpo">
     <header Id="inicio" class="nav">
@@ -16,7 +17,7 @@
             </button>
             <nav id="menu-navegacion" class="oculto">
                 <ul>
-                    <li><a id = "btn-inicio" href="#inicio">Inicio</a></li>
+                    <li><a id = "btn-inicio">Inicio</a></li>
                     <li><a href="#personajes">Personajes</a></li>
                     <li><a href="#planetas">Planetas</a></li>
                     <li><a href="#naves">naves</a></li>
@@ -31,21 +32,76 @@
         <!-- PERSONAJES -->
     <section id="personajes" class="seccion-vista oculto">
         <h2>Personajes</h2>
-        <div class="contenedor-tarjetas">
-            
-        </div>
+        <!-- BARRA DE BUSQUEDA -->
+    <div class="controles">
+        <input type="search" id="input-busqueda" placeholder="Buscar (ej. Luke)...">
+
+        <!-- Filtro por Género -->
+        <select id="filtro-genero">
+            <option value="todos">Todos los personajes</option>
+            <option value="male">Masculino</option>
+            <option value="female">Femenino</option>
+            <option value="n/a">Anroide</option>
+        </select>
+
+        <!-- Ordenamiento -->
+        <select id="select-orden">
+            <option value="a-z">Nombre: A - Z</option>
+            <option value="z-a">Nombre: Z - A</option>
+        </select>
+    </div>
+
+    <!-- INDICADOR DE CARGA (Loader/Spinner) -->
+    <div id="loader" class="loader oculto">
+
+    </div>
+
+    <p id="mensaje-error" class="mensaje oculto"> </p>
+
+    <!-- TARJETAS -->
+    <div class="contenedor-tarjetas" id="lista-personajes">
+        <!-- Tarjeta de prueba  -->
+        <article class="tarjeta">
+            <h3>Luke Skywalker</h3>
+            <p><strong>Género:</strong> male</p>
+            <p><strong>Altura:</strong> 172 cm</p>
+            <p><strong>Peso:</strong> 77 kg</p>
+            <p><strong>Nacimiento:</strong> 19BBY</p>
+            <button class="btn-detalle">Ver detalles</button>
+        </article>
+    </div>
     </section>
 
     <!-- PLANETAS -->
     <section id="planetas" class="seccion-vista oculto">
         <h2>Planetas</h2>
-       
+        <div class="contenedor-tarjetas">
+            
+        </div>
     </section>
 
     <!-- NAVES -->
     <section id="naves" class="seccion-vista oculto">
         <h2>Naves</h2>
-        
+         <div class="contenedor-tarjetas">
+            
+        </div>
+    </section>
+
+    <section>
+        <aside id="panel-detalle" class="panel-lateral cerrado">
+        <button id="btn-cerrar-panel" class="btn-cerrar">&times;</button>
+        <div class="panel-contenido">
+        <h2 id="detalle-nombre">Nombre del Personaje</h2>
+        <div id="detalle-info">
+            
+        </div>
+    </section>
+
+    <section id="footer">
+        <footer>
+
+        </footer>
     </section>
 </main>
 <script src="./js/ui.js"></script>

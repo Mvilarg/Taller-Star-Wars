@@ -24,6 +24,7 @@ body {
 /* Imagen de fondo */
 #Fondo{
     display: flex;
+    flex-wrap: wrap;
     justify-content:center;
     align-items: center;
     margin-top: 80px;
@@ -45,7 +46,7 @@ body {
 
 /*Menu hamburguesa*/
 .menu {
-    position: absolute;
+    position: fixed;
     top: 20px;
     left: 20px;
     z-index: 100;

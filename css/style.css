@@ -103,4 +103,24 @@ body {
     display: none;
 }
 
+.mensaje-construccion {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px dashed #ffe81f; /* Borde punteado amarillo Star Wars */
+    margin: 30px auto;
+    max-width: 500px;
+}
 
+.mensaje-construccion p {
+    font-size: 1.5rem;
+    color: #ffe81f;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.mensaje-construccion small {
+    color: #ccc;
+    font-size: 1rem;
+}

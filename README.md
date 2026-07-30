@@ -18,4 +18,4 @@ Una aplicación web interactiva y totalmente responsiva diseñada para explorar 
 * **HTML5:** Estructuración semántica de la interfaz.
 * **CSS3:** Maquetación moderna utilizando **CSS Grid**, **Flexbox**, animaciones `@keyframes` y *media queries*.
 * **JavaScript (Vanilla):** Lógica para la manipulación del DOM, interacción del usuario y filtros.
-
+  

@@ -6,7 +6,7 @@
     <title>Star-Wars</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
-<body>
+<body id = "cuerpo">
     <header Id="inicio" class="nav">
         <div class="menu">
             <button id="btn-hamburguesa" class="hamburguesa">
@@ -16,19 +16,38 @@
             </button>
             <nav id="menu-navegacion" class="oculto">
                 <ul>
-                    <li><a href="#inicio"></a>Inicio</li>
-                    <li><a href="#personajes"></a>Personajes</li>
-                    <li><a href="#planetas"></a>Planetas</li>
-                    <li><a href="#naves"></a>naves</li>
+                    <li><a id = "btn-inicio" href="#inicio">Inicio</a></li>
+                    <li><a href="#personajes">Personajes</a></li>
+                    <li><a href="#planetas">Planetas</a></li>
+                    <li><a href="#naves">naves</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-    <main>
-        <section id="Fondo">
-                <img id="logo" src="./assets/img/Logo-Starwars.png" alt="Logo Star Wars">
-        </section>
-    </main>
-    <script src="./js/ui.js"></script>
+<main>
+    <section id="Fondo" class="seccion-vista">
+            <img id="logo" src="./assets/img/Logo-Starwars.png" alt="Logo Star Wars">
+    </section>
+        <!-- PERSONAJES -->
+    <section id="personajes" class="seccion-vista oculto">
+        <h2>Personajes</h2>
+        <div class="contenedor-tarjetas">
+            
+        </div>
+    </section>
+
+    <!-- PLANETAS -->
+    <section id="planetas" class="seccion-vista oculto">
+        <h2>Planetas</h2>
+       
+    </section>
+
+    <!-- NAVES -->
+    <section id="naves" class="seccion-vista oculto">
+        <h2>Naves</h2>
+        
+    </section>
+</main>
+<script src="./js/ui.js"></script>
 </body>
 </html>

@@ -1,120 +1,128 @@
 * {
-    padding: 0px ;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     box-sizing: border-box;
 }
 
 @font-face {
     font-family: "Star-wars";
     src: url(../assets/font/Orbitron-VariableFont_wght.ttf);
-    font-weight: normal ;
+    font-weight: normal;
     font-style: normal;
 }
-main {
-    padding-bottom: 70px;
-}
 
-/* Fondo */
+/* Fondo principal */
 body {
     background-image: url(../assets/img/Fondo-estrellas.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     min-height: 100vh;
-    font-family: "star-wars";
-}
-
-/* Imagen de fondo */
-#Fondo{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content:center;
-    align-items: center;
-    margin-top: 80px;
-}
-
-#Fondo img{
-    width: 60vw;
-    animation: aparecerLogo 3s ease-in-out forwards;
-    opacity: 0; 
-    transform: scale(0.5);
-}   
-/*variable para efecto de logo */
-@keyframes aparecerLogo {
-  100% {
-    opacity: 1;
-    transform: scale(1); 
-  }
-}
-
-/*Menu hamburguesa*/
-.menu {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 100;
-}
-
-.hamburguesa{
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+    font-family: "Star-wars", sans-serif;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    overflow-x: hidden; 
 }
 
-.hamburguesa span{
-    display: block;
-    width: 40px;    
-    height: 5px;
-    background-color: #f8e111;
-    transition: 0.3s;
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 60px; 
 }
 
-#menu-navegacion{
-    position: absolute;
-    top: 40px;  
-    left: 0;    
-    background-color:transparent;
-    padding: 1rem;
-    
+/* --- BARRA SUPERIOR FIJA (NAVBAR) --- */
+header.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-bottom: 1px solid #f8e111;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.menu {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 #menu-navegacion ul {
-    cursor: pointer;
+    display: flex;
+    gap: 25px;
+    list-style: none;
 }
 
-#menu-navegacion li{
-    list-style-type: none;
-    font-size: 23px;
-    margin-bottom: 10px;
-}
-
-#menu-navegacion a{
+#menu-navegacion a {
     text-decoration: none;
-    font-size: 23px;
-    margin-bottom: 10px;
+    font-size: 1rem;
     color: #f8e111;
+    transition: color 0.2s;
 }
 
-#menu-navegacion li:hover {
-    transform: translateX(10px);
+#menu-navegacion a:hover {
+    color: #ffffff;
 }
 
-.oculto{
-    display: none;
+.hamburguesa {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
 }
 
-/* Mensajes de construccion */
+.hamburguesa span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: #f8e111;
+}
+
+/* --- CONTENEDOR PRINCIPAL (ALINEADO ARRIBA) --- */
+#Fondo {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    flex: 1;
+    padding: 20px;
+    width: 100%;
+}
+
+#Fondo img {
+    max-width: 60vw;
+    max-height: 50vh;
+    object-fit: contain;
+    animation: aparecerLogo 2s ease-in-out forwards;
+    opacity: 0;
+    transform: scale(0.5);
+    margin: auto; 
+}
+
+@keyframes aparecerLogo {
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* --- SECCIONES EN CONSTRUCCIÓN --- */
 .mensaje-construccion {
     text-align: center;
     padding: 60px 20px;
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
-    border: 1px dashed #ffe81f; 
-    margin: 30px auto;
+    border: 1px dashed #ffe81f;
+    margin: 20px auto;
     max-width: 500px;
+    width: 100%;
 }
 
 .mensaje-construccion p {
@@ -128,17 +136,58 @@ body {
     color: #ccc;
     font-size: 1rem;
 }
-/*footer*/
+
+/* --- FOOTER --- */
 footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    margin-top: auto;
     width: 100%;
     color: #f8e111;
-    background-color: rgba(255, 255, 255, 0.08); 
+    background-color: rgba(0, 0, 0, 0.9);
     text-align: center;
-    padding: 12px 0;
+    padding: 15px 0;
     font-size: 0.9rem;
     border-top: 1px solid #ffe81f;
-    z-index: 90;
+}
+
+.oculto {
+    display: none !important;
+}
+
+/* --- MEDIA QUERIES PARA NAVEGACIÓN --- */
+
+/* ESCRITORIO (>768px) */
+@media (min-width: 769px) {
+    .hamburguesa {
+        display: none; 
+    }
+
+    #menu-navegacion {
+        display: block !important; 
+    }
+}
+
+/* MÓVIL (<=768px) */
+@media (max-width: 768px) {
+    .menu {
+        justify-content: flex-start;
+    }
+
+    .hamburguesa {
+        display: flex;
+    }
+
+    #menu-navegacion {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.95);
+        border-bottom: 1px solid #f8e111;
+        padding: 15px 20px;
+    }
+
+    #menu-navegacion ul {
+        flex-direction: column;
+        gap: 15px;
+    }
 }

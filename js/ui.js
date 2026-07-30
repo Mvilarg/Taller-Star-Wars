@@ -1,26 +1,30 @@
 // ==========================================
-// SELECCIÓN DE ELEMENTOS DEL DOM
+// 1. ELEMENTOS DEL DOM
 // ==========================================
 const btnHamburguesa = document.getElementById("btn-hamburguesa");
 const menuNavegacion = document.getElementById("menu-navegacion");
 const enlacesMenu = document.querySelectorAll("#menu-navegacion a");
 const imgFondo = document.getElementById("logo");
+
 const contenedorTarjetas = document.getElementById("lista-personajes");
 const loader = document.getElementById("loader");
 
-// LOS 3 CONTROLES
 const inputBusqueda = document.getElementById("input-busqueda");
 const filtroGenero = document.getElementById("filtro-genero");
 const selectOrden = document.getElementById("select-orden");
 
-// Arreglo para almacenar la lista original descargada de la API
+const panelDetalle = document.getElementById("panel-detalle");
+const btnCerrarPanel = document.getElementById("btn-cerrar-panel");
+const detalleNombre = document.getElementById("detalle-nombre");
+const detalleInfo = document.getElementById("detalle-info");
+
+// Guardará la lista original de la API
 let personajesGuardados = [];
 
 // ==========================================
-// CONTROL DE MENÚ Y NAVEGACIÓN
+// 2. NAVEGACIÓN Y MENÚ
 // ==========================================
-
-btnHamburguesa.addEventListener("click", function() {
+btnHamburguesa.addEventListener("click", () => {
     menuNavegacion.classList.toggle("oculto");
 });
 
@@ -29,18 +33,15 @@ function mostrarSeccion(idSeccion) {
     secciones.forEach(sec => sec.classList.add("oculto"));
 
     const seccionActiva = document.getElementById(idSeccion);
-    if (seccionActiva) {
-        seccionActiva.classList.remove("oculto");
-    }
+    if (seccionActiva) seccionActiva.classList.remove("oculto");
 }
 
-enlacesMenu.forEach(function (enlace) {
-    enlace.addEventListener("click", function (e) {
+enlacesMenu.forEach(enlace => {
+    enlace.addEventListener("click", (e) => {
         e.preventDefault();
         menuNavegacion.classList.add("oculto");
 
-        const href = enlace.getAttribute("href");
-        const destino = href ? href.replace("#", "") : "inicio";
+        const destino = enlace.getAttribute("href").replace("#", "");
 
         if (destino === "inicio") {
             imgFondo.style.display = "block";
@@ -54,130 +55,123 @@ enlacesMenu.forEach(function (enlace) {
             }
         }
 
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
     });
 });
 
 // ==========================================
-// RENDERIZADO Y API
+// 3. CARGA Y FILTRADO
 // ==========================================
+async function cargarVistaPersonajes() {
+    try {
+        if (loader) loader.classList.remove("oculto");
+        contenedorTarjetas.innerHTML = "";
 
-function renderizarPersonajes(listaPersonajes) {
+        // Petición a la API mediante la función de api.js
+        personajesGuardados = await obtenerPersonajes();
+
+        // Reseteamos los filtros a sus valores iniciales
+        if (inputBusqueda) inputBusqueda.value = "";
+        if (filtroGenero) filtroGenero.value = "todos";
+        if (selectOrden) selectOrden.value = "a-z";
+
+        aplicarFiltros();
+
+    } catch (error) {
+        contenedorTarjetas.innerHTML = "<p class='mensaje'>Error al cargar los personajes.</p>";
+    } finally {
+        if (loader) loader.classList.add("oculto");
+    }
+}
+
+function aplicarFiltros() {
+    let lista = [...personajesGuardados];
+
+    // 1. Buscador por texto
+    const texto = inputBusqueda.value.toLowerCase().trim();
+    if (texto) {
+        lista = lista.filter(p => p.name.toLowerCase().includes(texto));
+    }
+
+    // 2. Filtro por género
+    const genero = filtroGenero.value;
+    if (genero !== "todos") {
+        lista = lista.filter(p => p.gender.toLowerCase() === genero);
+    }
+
+    // 3. Ordenamiento
+    if (selectOrden.value === "a-z") {
+        lista.sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+        lista.sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    renderizarPersonajes(lista);
+}
+
+// Escuchamos los cambios en tiempo real
+inputBusqueda.addEventListener("input", aplicarFiltros);
+filtroGenero.addEventListener("change", aplicarFiltros);
+selectOrden.addEventListener("change", aplicarFiltros);
+
+// ==========================================
+// 4. RENDERIZADO DE TARJETAS (SIN IMÁGENES)
+// ==========================================
+function renderizarPersonajes(lista) {
     contenedorTarjetas.innerHTML = "";
 
-    if (!listaPersonajes || listaPersonajes.length === 0) {
-        contenedorTarjetas.innerHTML = "<p class='mensaje'>No se encontraron personajes que coincidan.</p>";
+    if (lista.length === 0) {
+        contenedorTarjetas.innerHTML = "<p class='mensaje'>No se encontraron resultados.</p>";
         return;
     }
 
-    listaPersonajes.forEach((personaje) => {
-        const id = personaje.url.split("/").filter(Boolean).pop();
-        const urlImagen = `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`;
-
+    lista.forEach(personaje => {
         const tarjeta = document.createElement("article");
         tarjeta.classList.add("tarjeta");
 
         tarjeta.innerHTML = `
-            <img src="${urlImagen}" alt="${personaje.name}" onerror="this.src='./assets/img/Logo-Starwars.png';">
             <h3>${personaje.name}</h3>
             <p><strong>Género:</strong> ${personaje.gender}</p>
             <p><strong>Altura:</strong> ${personaje.height} cm</p>
             <p><strong>Peso:</strong> ${personaje.mass} kg</p>
             <p><strong>Nacimiento:</strong> ${personaje.birth_year}</p>
-            <button class="btn-detalle" data-id="${id}">Ver detalles</button>
+            <button class="btn-detalle" data-nombre="${personaje.name}">Ver detalles</button>
         `;
 
         contenedorTarjetas.appendChild(tarjeta);
     });
 }
 
-async function cargarVistaPersonajes() {
-    try {
-        if (loader) loader.classList.remove("oculto");
-        if (contenedorTarjetas) contenedorTarjetas.innerHTML = "";
+// ==========================================
+// 5. VER DETALLES (PANEL LATERAL)
+// ==========================================
+contenedorTarjetas.addEventListener("click", (e) => {
+    if (e.target.classList.contains("btn-detalle")) {
+        const nombrePersonaje = e.target.getAttribute("data-nombre");
+        const personaje = personajesGuardados.find(p => p.name === nombrePersonaje);
 
-        // Guardamos la copia original de la API
-        personajesGuardados = await obtenerPersonajes();
-
-        // Limpiamos los controles a sus valores por defecto
-        if (inputBusqueda) inputBusqueda.value = "";
-        if (filtroGenero) filtroGenero.value = "todos";
-        if (selectOrden) selectOrden.value = "a-z";
-
-        // Aplicamos renderizado inicial con orden A-Z
-        aplicarFiltrosYOrden();
-
-    } catch (error) {
-        if (contenedorTarjetas) {
-            contenedorTarjetas.innerHTML = "<p class='mensaje'>Error al cargar los personajes.</p>";
+        if (personaje) {
+            mostrarPanelDetalle(personaje);
         }
-    } finally {
-        if (loader) loader.classList.add("oculto");
     }
+});
+
+function mostrarPanelDetalle(personaje) {
+    detalleNombre.textContent = personaje.name;
+    
+    detalleInfo.innerHTML = `
+        <p><strong>Color de Ojos:</strong> ${personaje.eye_color}</p>
+        <p><strong>Color de Pelo:</strong> ${personaje.hair_color}</p>
+        <p><strong>Color de Piel:</strong> ${personaje.skin_color}</p>
+        <p><strong>Año de Nacimiento:</strong> ${personaje.birth_year}</p>
+        <p><strong>Películas en las que aparece:</strong> ${personaje.films ? personaje.films.length : 0}</p>
+        <p><strong>Naves pilotadas:</strong> ${personaje.starships ? personaje.starships.length : 0}</p>
+        <p><strong>Vehículos:</strong> ${personaje.vehicles ? personaje.vehicles.length : 0}</p>
+    `;
+
+    panelDetalle.classList.remove("cerrado");
 }
 
-// Función auxiliar para construir la URL de la imagen según el ID
-function obtenerUrlImagen(urlPersonaje) {
-    // Extraemos el número del final de la URL
-    const id = urlPersonaje.split("/").filter(Boolean).pop();
-    return `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`;
-}
-
-
-
-// ==========================================
-// LÓGICA DE BÚSQUEDA, FILTRO Y ORDEN (UNIFICADA)
-// ==========================================
-
-function aplicarFiltrosYOrden() {
-    if (!personajesGuardados || personajesGuardados.length === 0) return;
-
-    // Empezamos con una copia limpia de la lista original
-    let resultado = [...personajesGuardados];
-
-    // 1. FILTRO POR TECLADO (Búsqueda por texto)
-    const texto = inputBusqueda ? inputBusqueda.value.toLowerCase().trim() : "";
-    if (texto !== "") {
-        resultado = resultado.filter(personaje => 
-            personaje.name.toLowerCase().includes(texto)
-        );
-    }
-
-    // 2. FILTRO POR GÉNERO
-    const generoSeleccionado = filtroGenero ? filtroGenero.value : "todos";
-    if (generoSeleccionado !== "todos") {
-        resultado = resultado.filter(personaje => 
-            personaje.gender.toLowerCase() === generoSeleccionado.toLowerCase()
-        );
-    }
-
-    // 3. ORDENAMIENTO (A-Z / Z-A)
-    const orden = selectOrden ? selectOrden.value : "a-z";
-    if (orden === "a-z") {
-        resultado.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (orden === "z-a") {
-        resultado.sort((a, b) => b.name.localeCompare(a.name));
-    }
-
-    // Renderizamos el resultado final filtrado y ordenado
-    renderizarPersonajes(resultado);
-}
-
-// Escuchadores de eventos (sin necesidad de botones)
-if (inputBusqueda) {
-    // Escucha cada tecla presionada en el teclado en tiempo real
-    inputBusqueda.addEventListener("input", aplicarFiltrosYOrden);
-}
-
-if (filtroGenero) {
-    // Escucha cuando cambias la opción del desplegable de género
-    filtroGenero.addEventListener("change", aplicarFiltrosYOrden);
-}
-
-if (selectOrden) {
-    // Escucha cuando cambias el orden A-Z o Z-A
-    selectOrden.addEventListener("change", aplicarFiltrosYOrden);
-}
+btnCerrarPanel.addEventListener("click", () => {
+    panelDetalle.classList.add("cerrado");
+});
